@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <!--
+        Main definition that uses layout.html to put title and content attributes from Thymeleaf fragments;
+        {1} will be evaluated to either 'list', 'form' or 'view'.
+    -->
+    <definition name="message/*" template="message/layout">
+        <put-attribute name="title" value="title/{1}"/>
+        <put-attribute name="content" value="content/{1}"/>
+    </definition>
+    <!--
+        Fragments that are included by message/* definition above;
+        'template' attribute is a template file stored in /WEB-INF/views/message folder;
+        {1} will be evaluated to either 'list', 'form' or 'view'.
+    -->
+    <definition name="title/*" template="message/{1} :: title"/>
+    <definition name="content/*" template="message/{1} :: content"/>
+</tiles-definitions>

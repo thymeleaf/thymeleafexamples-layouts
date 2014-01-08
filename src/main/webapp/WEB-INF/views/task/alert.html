@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<body>
+<th:block layout:fragment="alert">
+    <div class="alert alert-dismissable" th:classappend="'alert-' + ${type}">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <h4 th:text="${header}">Alert header</h4>
+        <!--/* 'layout:fragment' attribute defines a replaceable content section */-->
+        <th:block layout:fragment="alert-content">
+            <p>Default alert content</p>
+        </th:block>
+    </div>
+</th:block>
+</body>
+</html>
+
