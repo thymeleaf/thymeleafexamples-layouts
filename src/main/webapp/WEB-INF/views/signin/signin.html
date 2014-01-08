@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html>
 
 <head>
     <title>Sign In</title>
@@ -12,7 +12,7 @@
 
 <form class="form-narrow form-horizontal" action="/j_spring_security_check" method="post" th:action="@{/j_spring_security_check}">
     <th:block th:if="${param.error != null}">
-        <div th:replace="fragments/alert :: alert (type='danger', task='Sign in error. Please try again.')">Alert</div>
+        <div th:replace="fragments/alert :: alert (type='danger', message='Sign in error. Please try again.')">Alert</div>
     </th:block>
     <fieldset>
         <legend>Please Sign In</legend>

@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html>
 <head>
     <!--/*  Each token will be replaced by their respective titles in the resulting page. */-->
     <title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">Task List</title>
@@ -19,7 +17,7 @@
     <!-- and is therefore entirely optional, as this markup fragment will be included -->
     <!-- from "fragments/header.html" at runtime.                                     -->
     <!-- ============================================================================ -->
-    <div class="navbar navbar-inverse navbar-fixed-top" th:fragment="header">
+    <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">Static header</a>

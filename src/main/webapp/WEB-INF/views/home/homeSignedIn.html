@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html>
 
 <head>
     <title th:text="#{view.index.title}">Welcome!</title>
@@ -13,9 +13,9 @@
 <div th:replace="fragments/header :: header">&nbsp;</div>
 <div class="container">
     <!--/* Handle the flash task */-->
-    <th:block th:if="${task != null}">
-        <!--/* The task code is returned from the @Controller */-->
-        <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(task.type)}, task=#{${task.task}(${#authentication.name})})">&nbsp;</div>
+    <th:block th:if="${message != null}">
+        <!--/* The message code is returned from the @Controller */-->
+        <div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#authentication.name})})">&nbsp;</div>
     </th:block>
     <p>
         Welcome to the Spring MVC + Thymeleaf application!
