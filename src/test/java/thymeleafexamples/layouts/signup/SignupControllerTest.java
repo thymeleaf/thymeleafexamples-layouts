@@ -13,7 +13,7 @@ import thymeleafexamples.layouts.config.WebAppConfigurationAware;
 public class SignupControllerTest extends WebAppConfigurationAware {
     @Test
     public void displaysSignupForm() throws Exception {
-        mockMvc.perform(get("/signup"))
+        mockMvc.perform(get("/signup").header("X-Requested-With", ""))
                 .andExpect(model().attributeExists("signupForm"))
                 .andExpect(view().name("signup/signup"))
                 .andExpect(content().string(

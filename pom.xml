@@ -7,12 +7,12 @@
     <groupId>thymeleafexamples</groupId>
     <artifactId>layouts</artifactId>
     <packaging>war</packaging>
-    <version>1.0.0</version>
-    <name>Spring MVC Application</name>
+    <version>20140112</version>
+    <name>Thymeleaf Examples - Layouts</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java-version>1.7</java-version>
-        <org.springframework-version>4.0.0.RC2</org.springframework-version>
+        <java-version>1.6</java-version>
+        <org.springframework-version>4.0.0.RELEASE</org.springframework-version>
         <org.springframework.security-version>3.2.0.RC2</org.springframework.security-version>
         <org.aspectj-version>1.7.4</org.aspectj-version>
         <org.slf4j-version>1.7.5</org.slf4j-version>
@@ -273,7 +273,7 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.1.1</version>
                 <configuration>
-                    <warName>layouts-1.0.0</warName>
+                    <warName>layouts-${project.version}</warName>
                 </configuration>
             </plugin>
             <plugin>
@@ -299,4 +299,35 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>build-dist</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>make-assembly-dist</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>attached</goal>
+                                </goals>
+                                <configuration>
+                                    <descriptors>
+                                        <descriptor>${basedir}/src/assembly/sources.xml</descriptor>
+                                    </descriptors>
+                                    <appendAssemblyId>true</appendAssemblyId>
+                                    <finalName>${project.groupId}-${project.artifactId}-${project.version}</finalName>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
 </project>
