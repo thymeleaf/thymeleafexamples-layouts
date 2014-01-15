@@ -18,7 +18,22 @@
         <org.slf4j-version>1.7.5</org.slf4j-version>
         <ch.qos.logback-version>1.0.13</ch.qos.logback-version>
         <org.thymeleaf-version>2.1.2.RELEASE</org.thymeleaf-version>
+        <org.thymeleaf.extras.tiles2-version>2.1.1.RELEASE</org.thymeleaf.extras.tiles2-version>
+        <org.thymeleaf.extras.springsecurity3-version>2.1.1.RELEASE</org.thymeleaf.extras.springsecurity3-version>
+        <nz.net.ultraq.thymeleaflayout-version>1.2.1</nz.net.ultraq.thymeleaflayout-version>
     </properties>
+    <licenses>
+      <license>
+        <name>The Apache Software License, Version 2.0</name>
+        <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        <distribution>repo</distribution>
+      </license>
+    </licenses>
+    <scm>
+      <url>scm:git:git@github.com:thymeleaf/thymeleafexamples-layouts.git</url>
+      <connection>scm:git:git@github.com:thymeleaf/thymeleafexamples-layouts.git</connection>
+      <developerConnection>scm:git:git@github.com:thymeleaf/thymeleafexamples-layouts.git</developerConnection>
+    </scm>
     <repositories>
         <repository>
             <id>java.net2</id>
@@ -99,22 +114,22 @@
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-springsecurity3</artifactId>
-            <version>2.1.1.RELEASE</version>
+            <version>${org.thymeleaf.extras.springsecurity3-version}</version>
         </dependency>
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-tiles2</artifactId>
-            <version>2.1.1.RELEASE</version>
+            <version>${org.thymeleaf.extras.tiles2-version}</version>
         </dependency>
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-tiles2-spring4</artifactId>
-            <version>2.1.1.RELEASE</version>
+            <version>${org.thymeleaf.extras.tiles2-version}</version>
         </dependency>
         <dependency>
             <groupId>nz.net.ultraq.thymeleaf</groupId>
             <artifactId>thymeleaf-layout-dialect</artifactId>
-            <version>1.2.1</version>
+            <version>${nz.net.ultraq.thymeleaflayout-version}</version>
         </dependency>
         <dependency>
             <groupId>jstl</groupId>
@@ -277,9 +292,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.1.1</version>
-                <configuration>
-                    <warName>layouts-${project.version}</warName>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
