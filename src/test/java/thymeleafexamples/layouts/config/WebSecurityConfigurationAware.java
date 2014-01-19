@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.test.web.servlet.setup.StandaloneMockMvcBuilder;
 
 import javax.inject.Inject;
 
