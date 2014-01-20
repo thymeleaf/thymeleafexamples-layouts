@@ -6,10 +6,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 import thymeleafexamples.layouts.account.Account;
 import thymeleafexamples.layouts.account.AccountRepository;
 
@@ -33,6 +30,11 @@ class MessageController {
     private void init() {
         messageRepository.save(new Message("What's up?", "This is a what's up message..."));
         messageRepository.save(new Message("How is going?", "This is a how's going message..."));
+    }
+
+    @ModelAttribute("page")
+    public String module() {
+        return "messages";
     }
 
     @RequestMapping(value = "message", method = RequestMethod.GET)

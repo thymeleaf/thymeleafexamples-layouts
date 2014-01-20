@@ -21,9 +21,9 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#" th:href="@{/}">Home</a></li>
-                <li><a href="#" th:href="@{/message}">Messages</a></li>
-                <li><a href="#" th:href="@{/task}">Tasks</a></li>
+                <li th:classappend="${page == 'home' ? 'active' : ''}"><a href="#" th:href="@{/}">Home</a></li>
+                <li th:classappend="${page == 'messages' ? 'active' : ''}"><a href="#" th:href="@{/message}">Messages</a></li>
+                <li th:classappend="${page == 'tasks' ? 'active' : ''}"><a href="#" th:href="@{/task}">Tasks</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li th:if="${#authorization.expression('!isAuthenticated()')}"><a href="/signin" th:href="@{/signin}">Sign in</a></li>
