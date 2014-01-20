@@ -7,7 +7,7 @@
     <groupId>thymeleafexamples</groupId>
     <artifactId>layouts</artifactId>
     <packaging>war</packaging>
-    <version>20140120</version>
+    <version>20140121</version>
     <name>Thymeleaf Examples - Layouts</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
