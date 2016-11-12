@@ -1,46 +1,35 @@
 package thymeleafexamples.layouts.config;
 
-import static org.springframework.context.annotation.ComponentScan.Filter;
-
-import com.google.common.collect.Lists;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.core.Ordered;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
-import org.thymeleaf.extras.springsecurity3.dialect.SpringSecurityDialect;
-import org.thymeleaf.extras.tiles2.dialect.TilesDialect;
-import org.thymeleaf.extras.tiles2.spring4.web.configurer.ThymeleafTilesConfigurer;
-import org.thymeleaf.extras.tiles2.spring4.web.view.ThymeleafTilesView;
+import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
+import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring4.SpringTemplateEngine;
+import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
-import org.thymeleaf.templateresolver.TemplateResolver;
-
-import org.thymeleaf.templateresolver.UrlTemplateResolver;
-import thymeleafexamples.layouts.Application;
-
-import java.util.Collections;
+import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.ITemplateResolver;
 
 @Configuration
-@ComponentScan(basePackageClasses = Application.class, includeFilters = @Filter(Controller.class), useDefaultFilters = false)
 class WebMvcConfig extends WebMvcConfigurationSupport {
 
     private static final String MESSAGE_SOURCE = "/WEB-INF/i18n/messages";
     private static final String VIEWS = "/WEB-INF/views/";
 
-    private static final String RESOURCES_HANDLER = "/resources/";
-    private static final String RESOURCES_LOCATION = RESOURCES_HANDLER + "**";
+    private static final String RESOURCES_LOCATION = "/resources/";
+    private static final String RESOURCES_HANDLER = RESOURCES_LOCATION + "**";
 
     @Override
     public RequestMappingHandlerMapping requestMappingHandlerMapping() {
@@ -59,64 +48,32 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
     }
 
     @Bean
-    public TemplateResolver templateResolver() {
-        TemplateResolver templateResolver = new ServletContextTemplateResolver();
-        templateResolver.setPrefix(VIEWS);
-        templateResolver.setSuffix(".html");
-        templateResolver.setTemplateMode("HTML5");
-        templateResolver.setCacheable(false);
-        return templateResolver;
-    }
-
-    @Bean
-    public UrlTemplateResolver urlTemplateResolver() {
-        return new UrlTemplateResolver();
+    public ITemplateResolver templateResolver() {
+        SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
+        resolver.setPrefix(VIEWS);
+        resolver.setSuffix(".html");
+        resolver.setTemplateMode(TemplateMode.HTML);
+        resolver.setCharacterEncoding("UTF-8");
+        resolver.setCacheable(false);
+        return resolver;
     }
 
     @Bean
     public SpringTemplateEngine templateEngine() {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-        templateEngine.addTemplateResolver(templateResolver());
-        templateEngine.addTemplateResolver(urlTemplateResolver());
+        templateEngine.setTemplateResolver(templateResolver());
         templateEngine.addDialect(new SpringSecurityDialect());
-        templateEngine.addDialect(new TilesDialect());
         templateEngine.addDialect(new LayoutDialect());
+        templateEngine.addDialect(new Java8TimeDialect());
         return templateEngine;
     }
 
-    /**
-     *  Handles all views except for the ones that are handled by Tiles. This view resolver
-     *  will be executed as first one by Spring.
-     */
     @Bean
-    public ViewResolver thymeleafViewResolver() {
-        ThymeleafViewResolver vr = new ThymeleafViewResolver();
-        vr.setTemplateEngine(templateEngine());
-        vr.setCharacterEncoding("UTF-8");
-        vr.setOrder(Ordered.HIGHEST_PRECEDENCE);
-        // all message/* views will not be handled by this resolver as they are Tiles views
-        vr.setExcludedViewNames(new String[]{"message/*"});
-        return vr;
-    }
-
-    /**
-     * Handles Tiles views.
-     */
-    @Bean
-    public ViewResolver tilesViewResolver() {
-        ThymeleafViewResolver vr = new ThymeleafViewResolver();
-        vr.setTemplateEngine(templateEngine());
-        vr.setViewClass(ThymeleafTilesView.class);
-        vr.setCharacterEncoding("UTF-8");
-        vr.setOrder(Ordered.LOWEST_PRECEDENCE);
-        return vr;
-    }
-
-    @Bean
-    public ThymeleafTilesConfigurer tilesConfigurer() {
-        ThymeleafTilesConfigurer ttc = new ThymeleafTilesConfigurer();
-        ttc.setDefinitions(new String[]{"/WEB-INF/views/message/tiles-defs.xml"});
-        return ttc;
+    public ViewResolver viewResolver() {
+        ThymeleafViewResolver thymeleafViewResolver = new ThymeleafViewResolver();
+        thymeleafViewResolver.setTemplateEngine(templateEngine());
+        thymeleafViewResolver.setCharacterEncoding("UTF-8");
+        return thymeleafViewResolver;
     }
 
     @Override
@@ -134,5 +91,16 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
+    }
+
+    /**
+     * Handles favicon.ico requests assuring no <code>404 Not Found</code> error is returned.
+     */
+    @Controller
+    static class FaviconController {
+        @RequestMapping("favicon.ico")
+        String favicon() {
+            return "forward:/resources/images/favicon.ico";
+        }
     }
 }

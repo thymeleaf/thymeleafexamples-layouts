@@ -15,7 +15,7 @@ public abstract class WebSecurityConfigurationAware extends WebAppConfigurationA
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Before
     public void before() {
-        this.mockMvc = MockMvcBuilders.<DefaultMockMvcBuilder>webAppContextSetup(this.wac)
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac)
                 .addFilters(this.springSecurityFilterChain).build();
     }
 }

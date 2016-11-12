@@ -10,7 +10,7 @@ import java.security.Principal;
 @Controller
 public class HomeController {
 
-    @ModelAttribute("page")
+    @ModelAttribute("module")
     public String module() {
         return "home";
     }

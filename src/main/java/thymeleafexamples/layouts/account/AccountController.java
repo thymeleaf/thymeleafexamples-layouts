@@ -1,33 +1,36 @@
 package thymeleafexamples.layouts.account;
 
-import java.security.Principal;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
-@Secured("ROLE_USER")
-class AccountController {
+import java.security.Principal;
 
-    private AccountRepository accountRepository;
+@RestController
+public class AccountController {
 
-    @Autowired
+    private final AccountRepository accountRepository;
+
     public AccountController(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
 
-    @RequestMapping(value = "account/current", method = RequestMethod.GET)
+    @GetMapping("account/current")
     @ResponseStatus(value = HttpStatus.OK)
-    @ResponseBody
-    public Account accounts(Principal principal) {
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
+    public Account currentAccount(Principal principal) {
         Assert.notNull(principal);
-        return accountRepository.findByEmail(principal.getName());
+        return accountRepository.findOneByEmail(principal.getName());
+    }
+
+    @GetMapping("account/{id}")
+    @ResponseStatus(value = HttpStatus.OK)
+    @Secured("ROLE_ADMIN")
+    public Account account(@PathVariable("id") Long id) {
+        return accountRepository.findOne(id);
     }
 }

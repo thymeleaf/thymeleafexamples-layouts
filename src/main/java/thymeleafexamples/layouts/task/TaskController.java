@@ -24,11 +24,11 @@ class TaskController {
     }
 
     private void init() {
-        taskRepository.save(new Task("Shopping", "Buy Milk and Butter...", "2014.01.01 13:22:42"));
-        taskRepository.save(new Task("Books", "Read 'Lords of The Ring'", "2014.01.02 15:22:42"));
+        taskRepository.save(new Task("Shopping", "Buy Milk and Butter...", "2017.01.01 13:22:42"));
+        taskRepository.save(new Task("Books", "Read 'Lords of The Ring'", "2017.01.02 15:22:42"));
     }
 
-    @ModelAttribute("page")
+    @ModelAttribute("module")
     public String module() {
         return "tasks";
     }

@@ -1,24 +1,14 @@
 package thymeleafexamples.layouts.account;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
-
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
-import java.util.Collection;
-import java.util.Collections;
+import java.time.Instant;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "account")
-@NamedQuery(name = Account.FIND_BY_EMAIL, query = "select a from Account a where a.email = :email")
 public class Account implements java.io.Serializable {
-
-	public static final String FIND_BY_EMAIL = "Account.findByEmail";
-
-    public static final String ROLE_USER = "ROLE_USER";
-    public static final String ROLE_ADMIN = "ROLE_ADMIN";
 
 	@Id
 	@GeneratedValue
@@ -30,7 +20,9 @@ public class Account implements java.io.Serializable {
 	@JsonIgnore
 	private String password;
 
-	private String role = ROLE_USER;
+	private String role = "ROLE_USER";
+
+	private Instant created;
 
     protected Account() {
 
@@ -40,6 +32,7 @@ public class Account implements java.io.Serializable {
 		this.email = email;
 		this.password = password;
 		this.role = role;
+		this.created = Instant.now();
 	}
 
 	public Long getId() {
@@ -70,12 +63,7 @@ public class Account implements java.io.Serializable {
 		this.role = role;
 	}
 
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority(getRole()));
-
-    }
-
-    public boolean isAdmin() {
-        return ROLE_ADMIN.equals(getRole());
-    }
+	public Instant getCreated() {
+		return created;
+	}
 }
