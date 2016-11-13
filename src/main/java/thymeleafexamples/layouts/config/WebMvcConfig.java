@@ -21,6 +21,7 @@ import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
+import org.thymeleaf.templateresolver.UrlTemplateResolver;
 
 @Configuration
 class WebMvcConfig extends WebMvcConfigurationSupport {
@@ -61,7 +62,8 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
     @Bean
     public SpringTemplateEngine templateEngine() {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-        templateEngine.setTemplateResolver(templateResolver());
+        templateEngine.addTemplateResolver(new UrlTemplateResolver());
+        templateEngine.addTemplateResolver(templateResolver());
         templateEngine.addDialect(new SpringSecurityDialect());
         templateEngine.addDialect(new LayoutDialect());
         templateEngine.addDialect(new Java8TimeDialect());

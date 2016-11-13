@@ -9,19 +9,22 @@
     <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
 </head>
 <body>
-<div th:replace="fragments/header :: header">Header</div>
+<div th:replace="~{fragments/header :: header}">Header</div>
 <div class="container">
     <div class="text-center">
-        <h1>Test</h1>
-        <p class="lead">
+        
+        <h1>Thymeleaf Layouts</h1>
+        
+        <p class="lead" th:insert="http://www.thymeleaf.org :: section.description">
             Welcome to the Spring MVC Quickstart application!
             Get started quickly by signing up.
         </p>
+        
         <p>
             <a href="/signup" th:href="@{/signup}" class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal">Sign up</a>
         </p>
     </div>
-    <div th:replace="fragments/footer :: footer">&copy; 2013 The Static Templates</div>
+    <div th:insert="~{fragments/footer :: footer}">&copy; 2016 The Static Templates</div>
 </div>
 <script th:inline="javascript" type="text/javascript">
 /* Fill in modal with content loaded with Ajax */

@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.security.Principal;
 
 @Controller
-public class HomeController {
+class HomeController {
 
     @ModelAttribute("module")
-    public String module() {
+    String module() {
         return "home";
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String index(Principal principal) {
+    String index(Principal principal) {
         return principal != null ? "home/homeSignedIn" : "home/homeNotSignedIn";
     }
 }
