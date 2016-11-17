@@ -21,7 +21,7 @@
         </p>
         
         <p>
-            <a href="/signup" th:href="@{/signup}" class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal">Sign up</a>
+            <a id="signup" class="btn btn-success btn-lg">Sign up</a>
         </p>
     </div>
     <div th:insert="~{fragments/footer :: footer}">&copy; 2016 The Static Templates</div>
@@ -29,7 +29,8 @@
 <script th:inline="javascript" type="text/javascript">
 /* Fill in modal with content loaded with Ajax */
 $(document).ready(function () {
-    $('#myModal').on('show.bs.modal', function (e) {
+    $('#signup').on('click', function (e) {
+        $("#myModal").modal();
         $("#myModalBody").text("");
         $.ajax({
             url: "signup",
@@ -48,7 +49,7 @@ $(document).ready(function () {
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="myModalLabel">Signup</h4>
             </div>
-            <div class="modal-body container" id="myModalBody">Lorem ipsum</div>
+            <div class="modal-body" id="myModalBody">Lorem ipsum</div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
