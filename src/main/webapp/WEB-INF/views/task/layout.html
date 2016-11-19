@@ -1,24 +1,40 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head>
-    <!--/*  Each token will be replaced by their respective titles in the resulting page. */-->
-    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Task List</title>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--/* Head takes 3 arguments that are fragments */-->
+<head th:fragment="head(title, links, scripts)">
+    
+    <!--/*  Title will be replaced by their respective titles in the calling template. */-->
+    <title th:replace="${title}">Task List</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    
+    <!--/* Default links; can be replaced by the calling templates */-->
     <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
     <link href="../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}"/>
+    
+    <!--/* Per-page placeholder for additional links */-->
+    <th:block th:replace="${links}" />
+    
+    <!--/* Default scripts; can be replaced by the calling templates */-->
     <script src="../../../resources/js/jquery.min.js" th:src="@{/resources/js/jquery.min.js}"></script>
     <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
+    
+    <!--/* Per-page placeholder for additional scripts */-->
+    <th:block th:replace="${scripts}" />
+    
 </head>
 <body>
-<!--/* Standard layout can be mixed with Layout Dialect */-->
-<div th:replace="fragments/header :: header">
+<!--/* Header fragment */-->
+<div th:fragment="header(breadcrumb)">
+    <ol class="breadcrumb container">
+        <li><a href="#">Home</a></li>
+        <th:block th:text="${breadcrumb}"></th:block>
+    </ol>
     <!-- ============================================================================ -->
     <!-- This content is only used for static prototyping purposes (natural templates)-->
-    <!-- and is therefore entirely optional, as this markup fragment will be included -->
-    <!-- from "fragments/header.html" at runtime.                                     -->
+    <!-- and is therefore entirely optional, as this markup fragment will be replaced -->
+    <!-- with "fragments/header.html" at runtime.                                     -->
     <!-- ============================================================================ -->
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top" th:replace="fragments/header :: header">
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">Static header</a>
@@ -29,26 +45,24 @@
                 </ul>
             </div>
         </div>
-    </div>
+    </nav>
 </div>
-<div class="container">
-    <div layout:fragment="content">
-        <!-- ============================================================================ -->
-        <!-- This content is only used for static prototyping purposes (natural templates)-->
-        <!-- and is therefore entirely optional, as this markup fragment will be included -->
-        <!-- from "fragments/header.html" at runtime.                                     -->
-        <!-- ============================================================================ -->
-        <h1>Static content for prototyping purposes only</h1>
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Praesent scelerisque neque neque, ac elementum quam dignissim interdum.
-            Phasellus et placerat elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Praesent scelerisque neque neque, ac elementum quam dignissim interdum.
-            Phasellus et placerat elit.
-        </p>
-
-    </div>
-    <div th:replace="fragments/footer :: footer">&copy; 2016 The Static Templates</div>
+<!--/* The value passed from calling template will be inserted in this element */-->
+<div class="container" th:fragment="content(value)" th:insert="${value}">
+    <!-- ============================================================================ -->
+    <!-- This content is only used for static prototyping purposes (natural templates)-->
+    <!-- and is therefore entirely optional.
+    <!-- ============================================================================ -->
+    <h1>Static content for prototyping purposes only</h1>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Praesent scelerisque neque neque, ac elementum quam dignissim interdum.
+        Phasellus et placerat elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Praesent scelerisque neque neque, ac elementum quam dignissim interdum.
+        Phasellus et placerat elit.
+    </p>
 </div>
+<!--\/* Footer fragment */-->
+<footer th:fragment="footer" class="text-center">&copy; 2016 Default Footer</footer>
 </body>
 </html>

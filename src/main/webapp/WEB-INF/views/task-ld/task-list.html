@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{task/layout}">
+      layout:decorate="~{task-ld/layout}">
 <head>
     <title>Task List</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -17,14 +17,14 @@
 
     <!--/* Demonstrating layout:include */-->
 
-    <div layout:insert="~{task/alert :: alert}" th:with="type='info', header='Info'" th:remove="tag">
+    <div layout:insert="~{task-ld/alert :: alert}" th:with="type='info', header='Info'" th:remove="tag">
         <!--/* Implements alert content fragment with simple content */-->
         <th:block layout:fragment="alert-content">
             <p><em>This is a simple list of tasks!</em></p>
         </th:block>
     </div>
 
-    <div layout:insert="~{task/alert :: alert}" th:with="type='danger', header='Oh snap! You got an error!'" th:remove="tag">
+    <div layout:insert="~{task-ld/alert :: alert}" th:with="type='danger', header='Oh snap! You got an error!'" th:remove="tag">
         <!--/* Implements alert content fragment with full-blown HTML content */-->
         <th:block layout:fragment="alert-content">
             <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.</p>

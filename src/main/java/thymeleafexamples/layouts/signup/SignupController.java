@@ -17,7 +17,7 @@ import thymeleafexamples.layouts.support.web.MessageHelper;
 import javax.validation.Valid;
 
 @Controller
-public class SignupController {
+class SignupController {
 
 	private static final String SIGNUP_VIEW_NAME = "signup/signup";
 
@@ -25,7 +25,7 @@ public class SignupController {
 	private AccountService accountService;
 
 	@GetMapping("signup")
-	public String signup(Model model, @RequestHeader(value = "X-Requested-With", required = false) String requestedWith) {
+	String signup(Model model, @RequestHeader(value = "X-Requested-With", required = false) String requestedWith) {
 		model.addAttribute(new SignupForm());
 		if (AjaxUtils.isAjaxRequest(requestedWith)) {
 			return SIGNUP_VIEW_NAME.concat(" :: signupForm");
