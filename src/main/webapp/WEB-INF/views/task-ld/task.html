@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="task/layout">
+      layout:decorate="~{task-ld/layout}">
 <head>
-    <title>Create Task</title>
+    <title>Task Details</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
     <link href="../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}"/>
@@ -14,8 +14,10 @@
 
 <!--/* Create */-->
 <div layout:fragment="content">
-    <h1>Task Details</h1>
-    <div>@TODO</div>
+    <div id="task-details">
+        <h2 th:text="${task.title}">Task Details</h2>
+        <div th:text="${task.text}">Text</div>
+    </div>
 </div>
 </body>
 </html>

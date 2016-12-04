@@ -51,7 +51,7 @@
         <tr th:each="task : ${tasks}">
             <td th:text="${task.id}">1</td>
             <td>
-                <a href="#" th:text="${task.title}">Title ...</a>
+                <a href="#" th:href="@{/task-ld/{id}(id=${task.id})}" th:text="${task.title}">Title ...</a>
             </td>
             <td th:text="${task.text}">Text ...</td>
             <td th:text="${#calendars.format(task.dueTo)}">July 11, 2016 2:17:16 PM CDT</td>

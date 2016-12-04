@@ -25,16 +25,15 @@
 <body>
 <!--/* Header fragment */-->
 <div th:fragment="header(breadcrumb)">
-    <ol class="breadcrumb container">
-        <li><a href="#">Home</a></li>
-        <th:block th:text="${breadcrumb}"></th:block>
+    <ol class="breadcrumb container" th:replace="${breadcrumb}">
+        <li><a href="#">Fake</a></li>
     </ol>
-    <!-- ============================================================================ -->
-    <!-- This content is only used for static prototyping purposes (natural templates)-->
-    <!-- and is therefore entirely optional, as this markup fragment will be replaced -->
-    <!-- with "fragments/header.html" at runtime.                                     -->
-    <!-- ============================================================================ -->
     <nav class="navbar navbar-inverse navbar-fixed-top" th:replace="fragments/header :: header">
+        <!-- ============================================================================ -->
+        <!-- This content is only used for static prototyping purposes (natural templates)-->
+        <!-- and is therefore entirely optional, as this markup fragment will be replaced -->
+        <!-- with "fragments/header.html" at runtime.                                     -->
+        <!-- ============================================================================ -->
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">Static header</a>
@@ -62,7 +61,7 @@
         Phasellus et placerat elit.
     </p>
 </div>
-<!--\/* Footer fragment */-->
+<!--/* Footer fragment */-->
 <footer th:fragment="footer" class="text-center">&copy; 2016 Default Footer</footer>
 </body>
 </html>

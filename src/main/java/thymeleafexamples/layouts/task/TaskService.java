@@ -23,7 +23,7 @@ class TaskService {
         return taskRepository.findAll();
     }
 
-    public Task findOne(Long aLong) {
-        return taskRepository.findOne(aLong);
+    public Task findOne(Long id) {
+        return taskRepository.findOne(id);
     }
 }

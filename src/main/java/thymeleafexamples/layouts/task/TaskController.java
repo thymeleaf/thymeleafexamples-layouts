@@ -34,7 +34,7 @@ class TaskController {
 
     @RequestMapping(value = "task/{id}", method = RequestMethod.GET)
     public String task(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("tasks", taskService.findOne(id));
+        model.addAttribute("task", taskService.findOne(id));
         return "task/task";
     }
 }
