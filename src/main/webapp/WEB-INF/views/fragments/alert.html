@@ -4,7 +4,7 @@
     <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
 </head>
 <body>
-    <div th:fragment="alert (type, message)" th:assert="${!#strings.isEmpty(type) && !#strings.isEmpty(message)}" class="alert alert-dismissable" th:classappend="'alert-' + ${type}">
+    <div th:fragment="alert (type, message)" th:assert="${!#strings.isEmpty(type) and !#strings.isEmpty(message)}" class="alert alert-dismissable" th:classappend="'alert-' + ${type}">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
         <span th:text="${message}">Test</span>
     </div>
