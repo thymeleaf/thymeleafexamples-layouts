@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html layout:decorator="task/layout">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <body>
 <th:block layout:fragment="alert">
     <div class="alert alert-dismissable" th:classappend="'alert-' + ${type}">

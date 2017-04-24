@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <!--/* Tiles attribute will be put here at runtime */-->
-    <title tiles:include="title">Title</title>
+    <!--/*  Each token will be replaced by their respective titles in the resulting page. */-->
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Task List</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
     <link href="../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}"/>
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="../../../resources/js/jquery.min.js" th:src="@{/resources/js/jquery.min.js}"></script>
     <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
 </head>
 <body>
-<!--/* Standard layout can be mixed with Tiles */-->
+<!--/* Standard layout can be mixed with Layout Dialect */-->
 <div th:replace="fragments/header :: header">
     <!-- ============================================================================ -->
     <!-- This content is only used for static prototyping purposes (natural templates)-->
@@ -31,8 +32,7 @@
     </div>
 </div>
 <div class="container">
-    <!--/* Tiles attribute will be put here at runtime */-->
-    <div tiles:replace="content">
+    <div layout:fragment="content">
         <!-- ============================================================================ -->
         <!-- This content is only used for static prototyping purposes (natural templates)-->
         <!-- and is therefore entirely optional, as this markup fragment will be included -->
@@ -48,7 +48,7 @@
         </p>
 
     </div>
-    <div th:replace="fragments/footer :: footer">&copy; 2014 The Static Templates</div>
+    <div th:replace="fragments/footer :: footer">&copy; 2017 The Static Templates</div>
 </div>
 </body>
 </html>

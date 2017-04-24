@@ -4,16 +4,11 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultMatcher;
-
-import javax.servlet.http.HttpSession;
+import thymeleafexamples.layouts.config.WebSecurityConfigurationAware;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
-
-import thymeleafexamples.layouts.config.WebSecurityConfigurationAware;
 
 public class UserAuthenticationIntegrationTest extends WebSecurityConfigurationAware {
 
@@ -28,29 +23,18 @@ public class UserAuthenticationIntegrationTest extends WebSecurityConfigurationA
     @Test
     public void userAuthenticates() throws Exception {
         final String username = "user";
-        ResultMatcher matcher = new ResultMatcher() {
-            public void match(MvcResult mvcResult) throws Exception {
-                HttpSession session = mvcResult.getRequest().getSession();
-                SecurityContext securityContext = (SecurityContext) session.getAttribute(SEC_CONTEXT_ATTR);
-                Assert.assertEquals(securityContext.getAuthentication().getName(), username);
-            }
-        };
-        mockMvc.perform(post("/j_spring_security_check").param("j_username", username).param("j_password", "demo"))
+
+        mockMvc.perform(post("/authenticate").param("username", username).param("password", "demo"))
                 .andExpect(redirectedUrl("/"))
-                .andExpect(matcher);
+                .andExpect(r -> Assert.assertEquals(((SecurityContext) r.getRequest().getSession().getAttribute(SEC_CONTEXT_ATTR)).getAuthentication().getName(), username));
+
     }
 
     @Test
     public void userAuthenticationFails() throws Exception {
         final String username = "user";
-        mockMvc.perform(post("/j_spring_security_check").param("j_username", username).param("j_password", "invalid"))
+        mockMvc.perform(post("/authenticate").param("username", username).param("password", "invalid"))
                 .andExpect(redirectedUrl("/signin?error=1"))
-                .andExpect(new ResultMatcher() {
-                    public void match(MvcResult mvcResult) throws Exception {
-                        HttpSession session = mvcResult.getRequest().getSession();
-                        SecurityContext securityContext = (SecurityContext) session.getAttribute(SEC_CONTEXT_ATTR);
-                        Assert.assertNull(securityContext);
-                    }
-                });
+                .andExpect(r -> Assert.assertNull(r.getRequest().getSession().getAttribute(SEC_CONTEXT_ATTR)));
     }
 }

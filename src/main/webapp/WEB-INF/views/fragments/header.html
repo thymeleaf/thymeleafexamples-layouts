@@ -1,15 +1,10 @@
 <!DOCTYPE html>
-<html>
-
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="../../../resources/js/bootstrap.min.js"></script>
 </head>
 <body>
-
-<!-- Navbar -->
-<div class="navbar navbar-inverse navbar-fixed-top" th:fragment="header">
+<nav class="navbar navbar-inverse navbar-fixed-top" th:fragment="header">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
@@ -21,17 +16,32 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li th:classappend="${page == 'home' ? 'active' : ''}"><a href="#" th:href="@{/}">Home</a></li>
-                <li th:classappend="${page == 'messages' ? 'active' : ''}"><a href="#" th:href="@{/message}">Messages</a></li>
-                <li th:classappend="${page == 'tasks' ? 'active' : ''}"><a href="#" th:href="@{/task}">Tasks</a></li>
+                <li th:classappend="${module == 'home' ? 'active' : ''}">
+                    <a href="#" th:href="@{/}">Home</a>
+                </li>
+                <li th:classappend="${module == 'tasks' ? 'active' : ''}">
+                    <a href="#" th:href="@{/task}">Tasks</a>
+                </li>
+                <li th:classappend="${module == 'tasks-ld' ? 'active' : ''}">
+                    <a href="#" th:href="@{/task-ld}">Tasks (Layout Dialect)</a>
+                </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li th:if="${#authorization.expression('!isAuthenticated()')}"><a href="/signin" th:href="@{/signin}">Sign in</a></li>
-                <li th:if="${#authorization.expression('isAuthenticated()')}"><a href="/logout" th:href="@{/logout}">Logout</a></li>
+                <li th:if="${#authorization.expression('!isAuthenticated()')}">
+                    <a href="/signin" th:href="@{/signin}">
+                        <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Sign in
+                    </a>
+                </li>
+                <li th:if="${#authorization.expression('isAuthenticated()')}">
+                    <a href="/logout" th:href="@{#}" onclick="$('#form').submit();">
+                        <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Logout
+                    </a>
+                    <form style="visibility: hidden" id="form" method="post" action="#" th:action="@{/logout}"></form>
+                </li>
             </ul>
         </div>
         <!--/.nav-collapse -->
     </div>
-</div>
+</nav>
 </body>
 </html>

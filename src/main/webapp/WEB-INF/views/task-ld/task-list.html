@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html layout:decorator="task/layout">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{task-ld/layout}">
 <head>
     <title>Task List</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
     <link href="../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}"/>
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="../../../resources/js/jquery.min.js" th:src="@{/resources/js/jquery.min.js}"></script>
     <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
 </head>
 <body>
@@ -15,14 +17,14 @@
 
     <!--/* Demonstrating layout:include */-->
 
-    <div layout:include="task/alert :: alert" th:with="type='info', header='Info'" th:remove="tag">
+    <div layout:insert="~{task-ld/alert :: alert}" th:with="type='info', header='Info'" th:remove="tag">
         <!--/* Implements alert content fragment with simple content */-->
         <th:block layout:fragment="alert-content">
             <p><em>This is a simple list of tasks!</em></p>
         </th:block>
     </div>
 
-    <div layout:include="task/alert :: alert" th:with="type='danger', header='Oh snap! You got an error!'" th:remove="tag">
+    <div layout:insert="~{task-ld/alert :: alert}" th:with="type='danger', header='Oh snap! You got an error!'" th:remove="tag">
         <!--/* Implements alert content fragment with full-blown HTML content */-->
         <th:block layout:fragment="alert-content">
             <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.</p>
@@ -48,9 +50,11 @@
         </tr>
         <tr th:each="task : ${tasks}">
             <td th:text="${task.id}">1</td>
-            <td><a href="#" th:text="${task.title}">Title ...</a></td>
+            <td>
+                <a href="#" th:href="@{/task-ld/{id}(id=${task.id})}" th:text="${task.title}">Title ...</a>
+            </td>
             <td th:text="${task.text}">Text ...</td>
-            <td th:text="${#calendars.format(task.dueTo)}">July 11, 2012 2:17:16 PM CDT</td>
+            <td th:text="${#calendars.format(task.dueTo)}">July 11, 2017 2:17:16 PM CDT</td>
         </tr>
         </tbody>
     </table>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--/* Title of this template will be passed to the head fragment along with custom links and scripts */-->
+<head th:replace="task/layout :: head(~{this :: title}, ~{this :: .custom-link}, ~{this :: .custom-script})">
+    <title>Task List</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
+    <link href="../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}"/>
+    
+    <!-- Custom links for this page only -->
+    <link class="custom-link" href="../../../resources/css/task/task.css" th:href="@{/resources/css/task/task.css}" />
+    
+    <script src="../../../resources/js/jquery.min.js" th:src="@{/resources/js/jquery.min.js}"></script>
+    <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
+
+    <!-- Custom scripts for this page only -->
+    <script class="custom-script" src="../../../resources/js/task/task.js" th:src="@{/resources/js/task/task.js}"></script>
+</head>
+<body>
+
+<!--/* The element with breadcrumb class will be passed to the header fragment */-->
+<header th:insert="task/layout :: header(~{ :: .breadcrumb})">
+    <ol class="breadcrumb container">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Tasks</a></li>
+    </ol>
+</header>
+
+<!--/* Insert content fragment with content of the element with id = 'task-list' */-->
+<div th:insert="task/layout :: content(~{ :: #task-list})">
+    <div id="task-list">
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <td>ID</td>
+                <td>Title</td>
+                <td>Text</td>
+                <td>Due to</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${tasks.empty}">
+                <td colspan="4">No tasks</td>
+            </tr>
+            <tr th:each="task : ${tasks}">
+                <td th:text="${task.id}">1</td>
+                <td>
+                    <a href="#" th:href="@{/task/{id}(id=${task.id})}" th:text="${task.title}">Title ...</a>
+                </td>
+                <td th:text="${task.text}">Text ...</td>
+                <td th:text="${#calendars.format(task.dueTo)}">July 11, 2017 2:17:16 PM CDT</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<footer th:replace="task/layout :: footer">Footer</footer>
+
+</body>
+</html>
