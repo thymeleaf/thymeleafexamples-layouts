@@ -15,7 +15,7 @@
         <!-- Override Spring version -->
         <!-- spring.version>4.3.3.RELEASE</spring.version -->
         <!-- Thymeleaf 3 -->
-        <org.thymeleaf-version>3.0.5.RELEASE</org.thymeleaf-version>
+        <org.thymeleaf-version>3.0.6.RELEASE</org.thymeleaf-version>
         <org.thymeleaf.extras.springsecurity4-version>3.0.2.RELEASE</org.thymeleaf.extras.springsecurity4-version>
         <nz.net.ultraq.thymeleaflayout-version>2.2.1</nz.net.ultraq.thymeleaflayout-version>
         <thymeleaf-extras-java8time-version>3.0.0.RELEASE</thymeleaf-extras-java8time-version>
